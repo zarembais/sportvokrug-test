@@ -1,18 +1,53 @@
 import "./App.css";
+import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
-import { useQuery } from "@apollo/client";
-import { GET_EVENTS } from "./query/events";
-// import EventsStore from "./store/eventsStore";
-import BottomLogo from "./components/BottomLogo/BottomLogo";
 import styled from "styled-components";
-import { useSelector, useDispatch } from "react-redux";
 
-import TimeChanger from "./components/TimeChanger/TimeChanger";
-import { setAllEvents, selectTime, selectEvents } from "./features/eventSlice";
-import Event from "./components/Event/Event";
-import PlayingButton from "./components/PlayingButton/PlayingButton";
+import BottomLogo from "./components/BottomLogo/BottomLogo";
 import Clocks from "./components/Clocks/Clocks";
 import CountdownBlock from "./components/CountdownBlock/CountdownBlock";
+import Event from "./components/Event/Event";
+import PlayingButton from "./components/PlayingButton/PlayingButton";
+import TimeChanger from "./components/TimeChanger/TimeChanger";
+
+import eventsStore from "./store/eventsStore";
+
+const App = observer(() => {
+  const events = eventsStore.nextEvent || [];
+  const activeEvent = eventsStore.ActiveEvent;
+
+  useEffect(() => {
+    eventsStore.fetchEvents();
+  }, []);
+
+  return (
+    <>
+      {events?.length > 0 ? (
+        <>
+          <Header>
+            <Clocks top />
+          </Header>
+          <Main>
+            <Event size={"28px"} event={events[0]} />
+            {activeEvent ? <PlayingButton /> : <CountdownBlock />}
+          </Main>
+          <NextEvent>
+            {events?.length > 1 && <Event size={"20px"} event={events[1]} />}
+          </NextEvent>
+        </>
+      ) : (
+        <Clocks variant={"center"} isEmpty />
+      )}
+
+      <Footer>
+        <TimeChanger />
+        <BottomLogo />
+      </Footer>
+    </>
+  );
+});
+
+export default App;
 
 const Header = styled.header`
   color: black;
@@ -46,56 +81,3 @@ const Footer = styled.footer`
   position: fixed;
   bottom: 5px;
 `;
-
-const App = () => {
-  const { data, loading, error } = useQuery(GET_EVENTS);
-  const dispatch = useDispatch();
-
-  const dateNow = useSelector(selectTime);
-  const events = useSelector(selectEvents) || [];
-  const activeEvent = useSelector((state) => state.event.activeEvent) || null;
-
-  useEffect(() => {
-    dispatch(setAllEvents(data?.videostandEvents?.finished));
-    console.log("activeEvent", activeEvent);
-  }, [data, loading, dateNow, dispatch, activeEvent]);
-
-  if (loading) {
-    return <div style={{ color: "white" }}>Loading...</div>;
-  }
-
-  if (error) {
-    return <h3>${error.message}</h3>;
-  }
-
-  return (
-    <>
-      {events?.length > 0 ? (
-        <>
-          <Header>
-            <Clocks variant={"top"} />
-          </Header>
-          <Main>
-            <Event size={"28px"} event={events[events?.length - 1]} />
-
-            {activeEvent ? <PlayingButton /> : <CountdownBlock />}
-          </Main>
-          <NextEvent>
-            {events?.length && (
-              <Event size={"20px"} event={events[events?.length - 2]} />
-            )}
-          </NextEvent>
-        </>
-      ) : (
-        <Clocks variant={"center"} isEmpty />
-      )}
-
-      <Footer>
-        <TimeChanger />
-        <BottomLogo />
-      </Footer>
-    </>
-  );
-};
-
-export default App;

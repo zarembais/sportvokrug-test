@@ -1,6 +1,4 @@
-import { gql } from "@apollo/client";
-
-export const GET_EVENTS = gql`
+export const query = `
 {
   videostandEvents(videostand_id: 6) {
     current_and_upcoming {
@@ -19,4 +17,4 @@ export const GET_EVENTS = gql`
     }
   }
 }
-`;
+`

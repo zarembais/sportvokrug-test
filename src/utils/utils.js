@@ -33,3 +33,30 @@ export const calculateDates = (start, end) => {
   }
   return r;
 };
+
+
+
+export const formatTime = (time) => {
+  return `${time.toLocaleTimeString("ru-RU", {
+    hour: "2-digit",
+    minute: "2-digit",
+  })}`;
+};
+
+export const formatDate = (time) => {
+  return `${time.toLocaleDateString("ru-RU", {
+    day: "numeric",
+    month: "long",
+  })}`;
+};
+
+export const formatWeekday = (time) => {
+  return `${time.toLocaleDateString("ru-RU", { weekday: "long" })}`;
+};
+
+export const getRussianWordEnding = (number, word) => {
+  const cases = [2, 0, 1, 1, 1, 2];
+  const dict = {"sec":  ['секунда', 'секунды', 'секунд'], "min": ['минута', 'минуты', 'минут'], "hour": ['час', 'часа', 'часов'], "day": ['день', 'дня', 'дней']}
+  const words = dict[word]
+  return words[number % 100 > 4 && number % 100 < 20 ? 2 : cases[Math.min(number % 10, 5)]]
+}
