@@ -26,15 +26,15 @@ const calculateLeftTime = (date, now) => {
 
 const CountdownBlock = observer(() => {
   const nextEvent = eventsStore.nextEvent || [];
-  const nowTime = eventsStore.time;
+  const timeNow = eventsStore.time;
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   
   useEffect(() => {
-    const rest = calculateLeftTime(nextEvent[0]?.dt_start, nowTime);
+    const rest = calculateLeftTime(nextEvent[0]?.dt_start, timeNow);
     // console.log("timeLeft", timeLeft);
     // console.log("rest", rest);
     setTimeLeft(rest);
-  }, [nowTime]);
+  }, [timeNow]);
 
   return (
     <>

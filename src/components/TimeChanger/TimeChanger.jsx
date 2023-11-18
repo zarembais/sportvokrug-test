@@ -1,19 +1,8 @@
 import { useState } from "react";
+import { observer } from "mobx-react-lite";
 import styled from "styled-components";
-import eventsStore from "../../store/eventsStore";
 
-const Wrapper = styled.div`
-  position: fixed;
-  padding-top: 25px;
-  bottom: 5px;
-  left: 5px;
-  width: 200px;
-  height: 170px;
-  background: gray;
-  color: black;
-  border-radius: 10px;
-  z-index: 10;
-`;
+import eventsStore from "../../store/eventsStore";
 
 const options = [
   {
@@ -33,25 +22,20 @@ const options = [
   },
 ];
 
-const TimeChanger = () => {
+const TimeChanger = observer(() => {
   const [selectedOption, setSelectedOption] = useState(options[0].value);
-  // const time = eventsStore.time
-  // const dispatch = useDispatch()
 
-  // useEffect(() => {
-  //   dispatch(setTime(selectedOption))
-  // }, [selectedOption, dispatch])
+  const timeNow = eventsStore.time;
 
   return (
     <Wrapper>
       <h3>Выберите время</h3>
-      <p>{selectedOption.slice(0, 19)}</p>
+      <p>{timeNow.toISOString().slice(0, 19).split("T").join(" ")}</p>
       <select
         value={selectedOption}
         onChange={(e) => {
-          setSelectedOption(e.target.value); 
-          // dispatch(setTime(e.target.value))
-          eventsStore.setTime(e.target.value)
+          setSelectedOption(e.target.value);
+          eventsStore.setTime(e.target.value);
         }}
       >
         {options.map((o) => (
@@ -62,6 +46,19 @@ const TimeChanger = () => {
       </select>
     </Wrapper>
   );
-};
+});
 
 export default TimeChanger;
+
+const Wrapper = styled.div`
+  position: fixed;
+  padding-top: 25px;
+  bottom: 5px;
+  left: 5px;
+  width: 200px;
+  height: 170px;
+  background: gray;
+  color: black;
+  border-radius: 10px;
+  z-index: 10;
+`;
