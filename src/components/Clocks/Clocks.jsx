@@ -1,28 +1,20 @@
-import { useEffect } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { observer } from "mobx-react-lite";
 
 import { formatDate, formatTime, formatWeekday } from "../../utils/utils";
 import eventsStore from "../../store/eventsStore";
 
-const Clocks = observer(({ top }) => {
+const Clocks = observer(({ istop }) => {
   const timeNow = eventsStore.time || new Date();
   const t = formatTime(timeNow);
   const w = formatWeekday(timeNow);
   const d = formatDate(timeNow);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      eventsStore.addSecond();
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <>
-      {top ? (
+      {istop === "true" ? (
         <>
-          <StyledTime top>{t}</StyledTime>
+          <StyledTime istop={istop}>{t}</StyledTime>
           <StyledDateTop>
             {d} · {w}
           </StyledDateTop>
@@ -30,7 +22,7 @@ const Clocks = observer(({ top }) => {
       ) : (
         <TimerWrapper>
           <Box style={{ backgroundColor: "#1F3768" }}>
-            <StyledTime top="false">{t}</StyledTime>
+            <StyledTime istop={istop}>{t}</StyledTime>
           </Box>
           <Box style={{ backgroundColor: "#172A52" }}>
             <StyledDate>{d}</StyledDate>
@@ -44,10 +36,16 @@ const Clocks = observer(({ top }) => {
 
 export default Clocks;
 
+const StyledDateTop = styled.div`
+  font-size: 22px;
+  line-height: 26px;
+  color: white;
+`;
+
 const StyledTime = styled.div`
+  height: ${({ istop }) => (!istop ? "70px" : "")};
   color: white;
   background-color: "#172a52";
-  height: 70px;
   font-family: "Open Sans", sans-serif;
   font-size: 96px;
   letter-spacing: 7.13px;
@@ -56,18 +54,6 @@ const StyledTime = styled.div`
   font-weight: bold;
   padding: 0;
   margin: 0;
-  ${(props) =>
-    props.top &&
-    css`
-      height: "";
-      background-color: "";
-    `}
-`;
-
-const StyledDateTop = styled.div`
-  font-size: 22px;
-  line-height: 26px;
-  color: white;
 `;
 
 const StyledDate = styled.div`

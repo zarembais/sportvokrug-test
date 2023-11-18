@@ -15,6 +15,13 @@ import eventsStore from "./store/eventsStore";
 const App = observer(() => {
   const events = eventsStore.nextEvent || [];
   const activeEvent = eventsStore.ActiveEvent;
+  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      eventsStore.addSecond();
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     eventsStore.fetchEvents();
@@ -25,20 +32,19 @@ const App = observer(() => {
       {events?.length > 0 ? (
         <>
           <Header>
-            <Clocks top />
+            <Clocks istop="true" />
           </Header>
           <Main>
-            <Event size={"28px"} event={events[0]} />
+            <Event event={events[0]} isbig="true" />
             {activeEvent ? <PlayingButton /> : <CountdownBlock />}
           </Main>
           <NextEvent>
-            {events?.length > 1 && <Event size={"20px"} event={events[1]} />}
+            {events?.length > 1 && <Event event={events[1]} isbig="false" />}
           </NextEvent>
         </>
       ) : (
-        <Clocks variant={"center"} isEmpty />
+        <Clocks istop="false" />
       )}
-
       <Footer>
         <TimeChanger />
         <BottomLogo />
