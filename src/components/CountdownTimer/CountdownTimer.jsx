@@ -4,9 +4,6 @@ import "./CountdownTimer.css";
 import { getRussianWordEnding } from "../../utils/utils";
 
 const CountdownTimer = observer(({ units, color, now, max }) => {
-  // console.log(units)
-  // const [timeUnits, setTimeUnits] = useState(now);
-  // console.log("units", units, "now", now, "max", max);
 
   const unit = getRussianWordEnding(now, units);
   const size = 160

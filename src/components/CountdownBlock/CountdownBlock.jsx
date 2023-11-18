@@ -5,14 +5,6 @@ import { useState } from "react";
 import eventsStore from "../../store/eventsStore";
 import { observer } from "mobx-react-lite";
 
-const StyledDiv = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  padding-top: 50px;
-`;
-
 const calculateLeftTime = (date, now) => {
   const diff = Math.abs(new Date(date) - new Date(now));
   // console.log("diff", diff);
@@ -27,12 +19,15 @@ const calculateLeftTime = (date, now) => {
 const CountdownBlock = observer(() => {
   const nextEvent = eventsStore.nextEvent || [];
   const timeNow = eventsStore.time;
-  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-  
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
+
   useEffect(() => {
     const rest = calculateLeftTime(nextEvent[0]?.dt_start, timeNow);
-    // console.log("timeLeft", timeLeft);
-    // console.log("rest", rest);
     setTimeLeft(rest);
   }, [timeNow]);
 
@@ -69,3 +64,11 @@ const CountdownBlock = observer(() => {
 });
 
 export default CountdownBlock;
+
+const StyledDiv = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding-top: 50px;
+`;

@@ -1,5 +1,17 @@
 import styled from "styled-components";
 
+const BottomLogo = () => {
+  return (
+    <LogoWrapper className="logo">
+      <Image src="/favicon.ico" alt="SportVokrug Logo" />
+      <TextSport>Спорт</TextSport>
+      <TextVokrug>вокруг.</TextVokrug>
+    </LogoWrapper>
+  );
+};
+
+export default BottomLogo;
+
 const TextSport = styled.p`
   color: rgba(255, 255, 255, 0.91);
   font-family: "PT Sans", sans-serif;
@@ -25,17 +37,4 @@ const LogoWrapper = styled.section`
   align-items: center;
   // position: fixed;
   bottom: 10px;
-  
 `;
-
-const BottomLogo = () => {
-  return (
-    <LogoWrapper className="logo">
-      <Image src="/favicon.ico" alt="SportVokrug Logo" />
-      <TextSport>Спорт</TextSport>
-      <TextVokrug>вокруг.</TextVokrug>
-    </LogoWrapper>
-  );
-};
-
-export default BottomLogo;

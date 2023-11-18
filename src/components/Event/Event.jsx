@@ -7,11 +7,7 @@ const Event = ({ event: { title, dt_start, dt_end }, isbig }) => {
 
   useEffect(() => {
     setDates(calculateDates(dt_start, dt_end));
-<<<<<<< HEAD
   }, [dt_start, dt_end]);
-=======
-  }, []);
->>>>>>> cba700126dddb50fce14369ae1027087fe54f0ad
 
   return (
     <>
