@@ -1,10 +1,9 @@
-export const calculateDates = (start, end) => {
+export const combineDates = (start, end) => {
   const s = new Date(start);
   const e = new Date(end);
-
   let r = "";
 
-  const addZero = (n) => (n < 10) ? "0" + n : n;
+  const addZero = (n) => (n < 10 ? "0" + n : n);
 
   // ДД-ДД.ММ.ГГГГ
   // ДД.ММ-ДД.ММ.ГГГГ;
@@ -20,9 +19,9 @@ export const calculateDates = (start, end) => {
         r = s.getDate() + "-" + e.getDate() + r;
       }
     } else {
-      r = `${s.getDate()}.${addZero(s.getMonth() + 1)}-${e.getDate()}.${
-        addZero(e.getMonth() + 1)
-      }${r}`;
+      r = `${s.getDate()}.${addZero(s.getMonth() + 1)}-${e.getDate()}.${addZero(
+        e.getMonth() + 1
+      )}${r}`;
     }
   } else {
     r = `${s.getDate()}.${addZero(
@@ -34,7 +33,15 @@ export const calculateDates = (start, end) => {
   return r;
 };
 
-
+export const calculateRemainTime = (date, now) => {
+  const diff = Math.abs(new Date(date) - new Date(now));
+  return {
+    days: Math.floor(diff / (1000 * 60 * 60 * 24)) % 7,
+    hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
+    minutes: Math.floor((diff / 1000 / 60) % 60),
+    seconds: Math.floor((diff / 1000) % 60),
+  };
+};
 
 export const formatTime = (time) => {
   return `${time.toLocaleTimeString("ru-RU", {
@@ -56,7 +63,14 @@ export const formatWeekday = (time) => {
 
 export const getRussianWordEnding = (number, word) => {
   const cases = [2, 0, 1, 1, 1, 2];
-  const dict = {"sec":  ['секунда', 'секунды', 'секунд'], "min": ['минута', 'минуты', 'минут'], "hour": ['час', 'часа', 'часов'], "day": ['день', 'дня', 'дней']}
-  const words = dict[word]
-  return words[number % 100 > 4 && number % 100 < 20 ? 2 : cases[Math.min(number % 10, 5)]]
-}
+  const dict = {
+    sec: ["секунда", "секунды", "секунд"],
+    min: ["минута", "минуты", "минут"],
+    hour: ["час", "часа", "часов"],
+    day: ["день", "дня", "дней"],
+  };
+  const words = dict[word];
+  return words[
+    number % 100 > 4 && number % 100 < 20 ? 2 : cases[Math.min(number % 10, 5)]
+  ];
+};

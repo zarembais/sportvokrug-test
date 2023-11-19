@@ -1,21 +1,36 @@
-import "./App.css";
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
-import styled from "styled-components";
 
-import BottomLogo from "./components/BottomLogo/BottomLogo";
+import Logo from "./components/Logo/Logo";
 import Clocks from "./components/Clocks/Clocks";
-import CountdownBlock from "./components/CountdownBlock/CountdownBlock";
+import CountdownWidget from "./components/CountdownWidget/CountdownWidget";
 import Event from "./components/Event/Event";
 import PlayingButton from "./components/PlayingButton/PlayingButton";
 import TimeChanger from "./components/TimeChanger/TimeChanger";
 
 import eventsStore from "./store/eventsStore";
+import {
+  Footer,
+  Header,
+  Main,
+  NextEvent,
+} from "./components/styles/App.styled";
+import { ThemeProvider } from "styled-components";
+
+const theme = {
+  colors: {
+    header: "#ebfbff",
+    body: "#fff",
+    footer: "#003333",
+  },
+  mobile: "320px",
+  tablet: "709px",
+};
 
 const App = observer(() => {
   const events = eventsStore.nextEvent || [];
   const activeEvent = eventsStore.ActiveEvent;
-  
+
   useEffect(() => {
     const interval = setInterval(() => {
       eventsStore.addSecond();
@@ -28,62 +43,38 @@ const App = observer(() => {
   }, []);
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
       {events?.length > 0 ? (
         <>
           <Header>
             <Clocks istop="true" />
           </Header>
           <Main>
-            <Event event={events[0]} isbig="true" />
-            {activeEvent ? <PlayingButton /> : <CountdownBlock />}
+            <Event event={events[0]} fontSize="28px" lines={2} />
+            {activeEvent ? <PlayingButton /> : <CountdownWidget />}
           </Main>
           <NextEvent>
-            {events?.length > 1 && <Event event={events[1]} isbig="false" />}
+            {events?.length > 1 ? <Event event={events[1]} /> : null}
           </NextEvent>
+          <Footer>
+            <TimeChanger />
+            <Logo istop="false" />
+          </Footer>
         </>
       ) : (
-        <Clocks istop="false" />
+        <>
+          <Header >
+            <Clocks istop="false" />
+          </Header>
+          <Footer >
+            <TimeChanger />
+            <Logo istop="false" />
+          </Footer>
+        </>
       )}
-      <Footer>
-        <TimeChanger />
-        <BottomLogo />
-      </Footer>
-    </>
+    
+    </ThemeProvider>
   );
 });
 
 export default App;
-
-const Header = styled.header`
-  color: black;
-  padding-top: 20px;
-  height: 20vh;
-  width: 100%;
-  background-color: #green;
-`;
-
-const Main = styled.main`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 45vh;
-  width: 100%;
-  background: #1e3465;
-`;
-
-const NextEvent = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 20vh;
-  width: 100%;
-`;
-
-const Footer = styled.footer`
-  width: 100%;
-  margin-top: auto;
-  position: fixed;
-  bottom: 5px;
-`;
