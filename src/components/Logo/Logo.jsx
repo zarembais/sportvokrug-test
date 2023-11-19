@@ -5,9 +5,9 @@ import {
   Image,
 } from "../styles/Logo.styled";
 
-const Logo = ({ istop }) => {
+const Logo = () => {
   return (
-    <LogoWrapper istop={istop}>
+    <LogoWrapper>
       <Image src="/favicon.ico" alt="SportVokrug Logo" />
       <TextSport>Спорт</TextSport>
       <TextVokrug>вокруг.</TextVokrug>

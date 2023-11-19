@@ -20,6 +20,11 @@ const options = [
     value: new Date(2023, 1, 15, 17, 35).toISOString(),
     label: "Мероприятие идет",
   },
+  {
+    id: 4,
+    value: new Date(2023, 2, 5, 23, 16).toISOString(),
+    label: "Следущего нет",
+  },
 ];
 
 const TimeChanger = observer(() => {

@@ -9,7 +9,7 @@ export const StyledSvg = styled.svg`
 `;
 
 export const StyledCircle = styled.circle`
-  stroke: ({color}) => color;
+  stroke: ${({color}) => color};
   stroke-dasharray: 439.822971502571;
   stroke-linecap: round;
   cx: 80px;

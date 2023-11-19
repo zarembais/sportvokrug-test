@@ -1,5 +1,6 @@
 import { makeAutoObservable } from "mobx";
 import { query } from "../api/query";
+import { data } from "../mock/data";
 
 class EventStore {
   events = [];
@@ -32,7 +33,10 @@ class EventStore {
       this.NextEvent;
       this.ActiveEvent;
     } catch (error) {
-      console.log(error);
+      console.log("Sorry, there is server error, please try again:", error);
+      this.events = data.videostandEvents.finished;
+      this.NextEvent;
+      this.ActiveEvent;
     }
   }
 
