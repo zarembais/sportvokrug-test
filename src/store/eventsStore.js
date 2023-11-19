@@ -13,7 +13,6 @@ class EventStore {
   }
 
   addSecond() {
-    // console.log(this.time);
     this.time = new Date(this.time.setSeconds(this.time.getSeconds() + 1));
   }
 
@@ -39,7 +38,6 @@ class EventStore {
 
   setTime(time) {
     this.time = new Date(time);
-    //  console.log("Set Time", this.time);
     this.NextEvent;
     this.ActiveEvent;
   }
@@ -54,13 +52,10 @@ class EventStore {
   }
 
   get NextEvent() {
-    // console.log("This Events", this.events)
-    // console.log("This Time", )
     const isoTime = this.time.toISOString();
     const next = this.events
       .filter((event) => event.dt_end > isoTime)
       .sort((a, b) => a.dt_start.localeCompare(b.dt_start));
-    // console.log("Next Events Num", next);
     this.nextEvent = next;
     return next;
   }

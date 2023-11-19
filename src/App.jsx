@@ -18,13 +18,10 @@ import {
 import { ThemeProvider } from "styled-components";
 
 const theme = {
-  colors: {
-    header: "#ebfbff",
-    body: "#fff",
-    footer: "#003333",
-  },
-  mobile: "320px",
-  tablet: "709px",
+  xs: "480px",
+  md: "768px",
+  lg: "992px",
+  xl: "1200px",
 };
 
 const App = observer(() => {
@@ -63,16 +60,15 @@ const App = observer(() => {
         </>
       ) : (
         <>
-          <Header >
+          <Header iscentered="true">
             <Clocks istop="false" />
           </Header>
-          <Footer >
+          <Footer>
             <TimeChanger />
             <Logo istop="false" />
           </Footer>
         </>
       )}
-    
     </ThemeProvider>
   );
 });

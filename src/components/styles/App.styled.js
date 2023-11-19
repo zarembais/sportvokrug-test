@@ -5,13 +5,14 @@ export const Header = styled.header`
   flex-direction: column;
   justify-content: center;
   padding: 20px 0 20px;
-  height: 15%;
   min-height: 200px;
   width: 100%;
 
-  // @media (max-height: ${({ theme }) => theme.tablet}) {
-  //   height: 15vh;
-  // }
+  ${({ iscentered }) =>
+    iscentered === "true" &&
+    `
+  margin-top: auto;
+  `}
 `;
 
 export const Main = styled.main`
@@ -19,10 +20,13 @@ export const Main = styled.main`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 55%;
   min-height: 400px;
   width: 100%;
   background: #1e3465;
+
+  @media (min-width: ${({ theme }) => theme.md}) {
+    height: 45vh;
+  }
 `;
 
 export const NextEvent = styled.section`
@@ -31,9 +35,9 @@ export const NextEvent = styled.section`
   align-items: center;
   height: 20%;
   width: 100%;
-  min-height: 200px;
+  min-height: 150px;
 
-  @media (max-width: ${({ theme }) => theme.tablet}) {
+  @media (max-width: ${({ theme }) => theme.xs}) {
     min-height: 100px;
   }
 `;
@@ -41,9 +45,9 @@ export const NextEvent = styled.section`
 export const Footer = styled.footer`
   width: 100%;
   min-height: 80px;
-  // height: 5%;
+  margin-top: auto;
 
-  // margin-top: auto;
-  // position: fixed;
-  // bottom: 5px;
+  @media (max-height: ${({ theme }) => theme.xs}) {
+    margin-top: 160px;
+  }
 `;

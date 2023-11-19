@@ -9,6 +9,10 @@ export const StyledButton = styled.button`
   border-radius: 15px;
   width: 451px;
   height: 107px;
+
+  @media (max-width: ${({ theme }) => theme.xs}) {
+    width: 320px;
+  }
 `;
 
 export const StyledImg = styled.img`
@@ -25,4 +29,7 @@ export const StyledText = styled.p`
   text-align: left;
   color: #ffffff;
   text-transform: uppercase;
+  @media (max-width: ${({ theme }) => theme.xs}) {
+    font-size: 24px;
+  }
 `;

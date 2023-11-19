@@ -31,15 +31,4 @@ export const LogoWrapper = styled.section`
   &&:hover {
     filter: drop-shadow(0 0 2em #646cffaa);
   }
-  `;
-  // ${(props) =>
-  //   props.istop === "false" &&
-  //   css`
-  //     position: fixed;
-  //     bottom: 5px;
-  //     left: 50%;
-  //     transform: translate(-50%, -50%);
-  //     background: rgba(255, 255, 255, 0.2);
-      
-  //   `}
-
+`;

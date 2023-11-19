@@ -12,10 +12,11 @@ const Event = ({ event: { title, dt_start, dt_end }, fontSize, lines }) => {
   return (
     <>
       <Dates>{dates}</Dates>
-      <Title fontSize={fontSize} lines={lines}>{title}</Title>
+      <Title fontSize={fontSize} lines={lines}>
+        {title}
+      </Title>
     </>
   );
 };
 
 export default Event;
-
