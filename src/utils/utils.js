@@ -1,9 +1,9 @@
+export const addZero = (n) => (n < 10 ? "0" + n : n);
+
 export const combineDates = (start, end) => {
   const s = new Date(start);
   const e = new Date(end);
   let r = "";
-
-  const addZero = (n) => (n < 10 ? "0" + n : n);
 
   // ДД-ДД.ММ.ГГГГ
   // ДД.ММ-ДД.ММ.ГГГГ;

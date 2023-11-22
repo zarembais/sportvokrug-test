@@ -22,7 +22,7 @@ const options = [
   },
   {
     id: 4,
-    value: new Date(2023, 2, 5, 23, 16).toISOString(),
+    value: new Date(2023, 2, 5, 23, 59, 55).toISOString(),
     label: "Следущего нет",
   },
 ];

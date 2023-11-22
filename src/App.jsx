@@ -55,22 +55,18 @@ const App = observer(() => {
           <NextEvent>
             {events?.length > 1 ? <Event event={events[1]} /> : null}
           </NextEvent>
-          <Footer>
-            <TimeChanger />
-            <Logo />
-          </Footer>
         </>
       ) : (
         <>
           <Header iscentered="true">
             <Clocks istop="false" />
           </Header>
-          <Footer>
-            <TimeChanger />
-            <Logo/>
-          </Footer>
         </>
       )}
+      <Footer>
+        <TimeChanger />
+        <Logo />
+      </Footer>
     </ThemeProvider>
   );
 });

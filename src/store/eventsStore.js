@@ -5,7 +5,6 @@ import { data } from "../mock/data";
 class EventStore {
   events = [];
   time = new Date();
-  HHMM = new Date().toISOString().slice(11, 16);
   timer = {};
   nextEvent = [];
   activeEvent = null;
@@ -19,22 +18,25 @@ class EventStore {
 
   async fetchEvents() {
     try {
+      const searchParams = new URLSearchParams(document.location.search);
       const data = await fetch(`${import.meta.env.VITE_URL}/graphql/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          query: query,
+          query,
+          variables: {
+            videostand_id: searchParams.get("videostand_id") || "6",
+          },
         }),
       });
       const res = await data.json();
       this.events = res.data.videostandEvents.finished;
-      this.NextEvent;
-      this.ActiveEvent;
     } catch (error) {
-      console.log("Sorry, there is server error, please try again:", error);
-      this.events = data.videostandEvents.finished;
+      console.log("Server error, please try again later:", error);
+      this.events = data.videostandEvents.finished; // mock data if server is offline
+    } finally {
       this.NextEvent;
       this.ActiveEvent;
     }
